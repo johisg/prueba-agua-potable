@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuestionario Técnico - Agua Potable</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      color: #005b9f;
+    }
+    .resultado {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e1f5fe;
+      border-left: 4px solid #0288d1;
+    }
+    button {
+      background-color: #0288d1;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #0277bd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cuestionario Técnico de Agua Potable</h1>
+  <p><strong>Nombre del usuario (opcional):</strong></p>
+  <input type="text" id="nombre" placeholder="Escribe tu nombre aquí"><br><br>
+
+  <form id="cuestionario">
+    <p>1. ¿Cuál es el diámetro mínimo permitido para tuberías de conducción en zonas urbanas, considerando necesidades contra incendios?</p>
+    <input type="radio" name="p1" value="incorrecta"> 50 mm<br>
+    <input type="radio" name="p1" value="incorrecta"> 75 mm<br>
+    <input type="radio" name="p1" value="correcta"> 100 mm<br>
+    <input type="radio" name="p1" value="incorrecta"> 150 mm<br><br>
+
+    <p>2. ¿Cuál es la velocidad de diseño recomendada dentro de las tuberías?</p>
+    <input type="radio" name="p2" value="incorrecta"> 0,6 m/s<br>
+    <input type="radio" name="p2" value="correcta"> 1,5 m/s<br>
+    <input type="radio" name="p2" value="incorrecta"> 2,5 m/s<br>
+    <input type="radio" name="p2" value="incorrecta"> 3,5 m/s<br><br>
+
+    <p>3. ¿Qué material permite una velocidad máxima de 6 m/s en conducciones a presión?</p>
+    <input type="radio" name="p3" value="incorrecta"> Hormigón armado<br>
+    <input type="radio" name="p3" value="incorrecta"> Plástico<br>
+    <input type="radio" name="p3" value="correcta"> Acero<br>
+    <input type="radio" name="p3" value="incorrecta"> Asbesto – cemento<br><br>
+
+    <p>4. ¿Cuál es la pendiente mínima recomendada en tramos ascendentes a presión?</p>
+    <input type="radio" name="p4" value="incorrecta"> 0,05%<br>
+    <input type="radio" name="p4" value="correcta"> 0,2%<br>
+    <input type="radio" name="p4" value="incorrecta"> 0,5%<br>
+    <input type="radio" name="p4" value="incorrecta"> 1%<br><br>
+
+    <p>5. ¿Cuál es el diámetro mínimo recomendado para bocas de fuego?</p>
+    <input type="radio" name="p5" value="incorrecta"> 25 mm<br>
+    <input type="radio" name="p5" value="correcta"> 50 mm<br>
+    <input type="radio" name="p5" value="incorrecta"> 75 mm<br>
+    <input type="radio" name="p5" value="incorrecta"> 100 mm<br><br>
+
+    <p>6. ¿Cuál es la velocidad mínima aceptable en sistemas de alcantarillado sanitario para garantizar auto limpieza?</p>
+    <input type="radio" name="p6" value="incorrecta"> 0,3 m/s<br>
+    <input type="radio" name="p6" value="correcta"> 0,45 m/s<br>
+    <input type="radio" name="p6" value="incorrecta"> 0,6 m/s<br>
+    <input type="radio" name="p6" value="incorrecta"> 0,9 m/s<br><br>
+
+    <p>7. ¿Cuál es el coeficiente de rugosidad (n) recomendado para tuberías plásticas según la fórmula de Manning?</p>
+    <input type="radio" name="p7" value="incorrecta"> 0,009<br>
+    <input type="radio" name="p7" value="incorrecta"> 0,010<br>
+    <input type="radio" name="p7" value="correcta"> 0,011<br>
+    <input type="radio" name="p7" value="incorrecta"> 0,013<br><br>
+
+    <button type="button" onclick="verificar()">Enviar</button>
+  </form>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    function verificar() {
+      let correctas = 0;
+      const total = 7;
+      const respuestas = document.querySelectorAll('input[type="radio"]:checked');
+      respuestas.forEach(r => {
+        if (r.value === "correcta") correctas++;
+      });
+
+      const nombre = document.getElementById("nombre").value;
+      let mensaje = `<h3>${nombre ? nombre + ',' : 'Resultado:'}</h3>`;
+      mensaje += `Obtuviste <strong>${correctas} de ${total}</strong> respuestas correctas.<br><br>`;
+
+      if (correctas < total) {
+        mensaje += "Fallaste en:<ul>";
+        for (let i = 1; i <= total; i++) {
+          const p = document.querySelector(`input[name="p${i}"]:checked`);
+          if (!p || p.value !== "correcta") {
+            mensaje += `<li>Pregunta ${i}</li>`;
+          }
+        }
+        mensaje += "</ul>";
+      } else {
+        mensaje += "¡Excelente! Has respondido todo correctamente.";
+      }
+
+      const divResultado = document.getElementById("resultado");
+      divResultado.innerHTML = mensaje;
+      divResultado.style.display = "block";
+    }
+  </script>
+</body>
+</html>
